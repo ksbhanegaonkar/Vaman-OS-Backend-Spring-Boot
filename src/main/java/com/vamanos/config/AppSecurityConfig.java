@@ -1,15 +1,19 @@
 package com.vamanos.config;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -17,45 +21,34 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 
-	/*
-	 * // Create 2 users for demo
-	 * 
-	 * @Override protected void configure(AuthenticationManagerBuilder auth) throws
-	 * Exception {
-	 * 
-	 * auth.inMemoryAuthentication()
-	 * .withUser("user").password("user").roles("USER") .and()
-	 * .withUser("admin").password("admin").roles("USER", "ADMIN");
-	 * 
-	 * }
-	 */
-    // Secure the endpoins with HTTP Basic authentication
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+	@Autowired
+	private UserDetailsService userDetailsService;
 
-    			http.httpBasic()
-                .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/books/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/books").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/books/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PATCH, "/books/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/books/**").hasRole("ADMIN")
-                .and()
-                .csrf().disable()
-                .formLogin().disable();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        //ok for demo
-        User.UserBuilder users = User.withDefaultPasswordEncoder();
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(users.username("user").password("user").roles("USER").build());
-        manager.createUser(users.username("admin").password("admin").roles("USER", "ADMIN").build());
-        return manager;
-    }
+	@Override
+	public void configure(HttpSecurity http) throws Exception {
+		http.csrf().disable().exceptionHandling()
+				.authenticationEntryPoint(
+						(request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+				.and().authorizeRequests().antMatchers("/**").authenticated().and().httpBasic();
+	}
+
+	@Override
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+	}
+
+
 	
 	
 }
