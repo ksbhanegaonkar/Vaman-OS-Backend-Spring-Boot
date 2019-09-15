@@ -2,7 +2,7 @@ package com.vamanos.entity;
 import javax.persistence.Entity;
 
 @Entity
-public class UserPermission extends BaseIdEntity {
+public class Permissions extends BaseIdEntity {
 
 	private String name;
 

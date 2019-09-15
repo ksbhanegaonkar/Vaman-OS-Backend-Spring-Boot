@@ -8,7 +8,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.JoinColumn;
 
 @Entity
-public class UserRole extends BaseIdEntity {
+public class Roles extends BaseIdEntity {
 
 	private String name;
 
@@ -16,7 +16,7 @@ public class UserRole extends BaseIdEntity {
 	@JoinTable(name = "permission_role", joinColumns = {
 			@JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "permission_id", referencedColumnName = "id") })
-	private List<UserPermission> permissions;
+	private List<Permissions> permissions;
 
 	public String getName() {
 		return name;
@@ -26,11 +26,11 @@ public class UserRole extends BaseIdEntity {
 		this.name = name;
 	}
 
-	public List<UserPermission> getPermissions() {
+	public List<Permissions> getPermissions() {
 		return permissions;
 	}
 
-	public void setPermissions(List<UserPermission> permissions) {
+	public void setPermissions(List<Permissions> permissions) {
 		this.permissions = permissions;
 	}
 

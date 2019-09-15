@@ -5,13 +5,13 @@ import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.vamanos.entity.SystemUser;
+import com.vamanos.entity.Users;
 
 @Repository
 @Transactional
-public interface UserRepository extends JpaRepository<SystemUser, Long> {
+public interface UserRepository extends JpaRepository<Users, Long> {
 
-	SystemUser findByUsername(String username);
+	Users findByUsername(String username);
 
 }
 

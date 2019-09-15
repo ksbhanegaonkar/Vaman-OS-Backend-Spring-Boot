@@ -17,7 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class SystemUser extends BaseIdEntity implements UserDetails {
+public class Users extends BaseIdEntity implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	private String email;
@@ -38,7 +38,7 @@ public class SystemUser extends BaseIdEntity implements UserDetails {
 	@JoinTable(name = "role_user", joinColumns = {
 			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "role_id", referencedColumnName = "id") })
-	private List<UserRole> roles;
+	private List<Roles> roles;
 
 	@Override
 	public boolean isEnabled() {

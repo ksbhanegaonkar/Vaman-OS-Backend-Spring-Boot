@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.vamanos.entity.SystemUser;
+import com.vamanos.entity.Users;
 import com.vamanos.repo.UserRepository;
 
 @SpringBootApplication
@@ -27,7 +27,7 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner {
     public void run(String... args) {
 
         log.info("StartApplication...");
-        SystemUser user = new SystemUser();
+        Users user = new Users();
         
         userRepository.save(user);
         
