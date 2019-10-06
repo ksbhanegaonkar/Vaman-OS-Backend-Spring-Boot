@@ -106,6 +106,8 @@ public class Users extends BaseIdEntity implements UserDetails {
 				authorities.add(new SimpleGrantedAuthority(p.getName()));
 			});
 		});
+		System.out.println("Authorities are below :::::::::::::");
+		System.out.println(authorities);
 
 		return authorities;
 	}

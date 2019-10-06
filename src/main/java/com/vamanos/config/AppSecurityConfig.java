@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.vamanos.encoder.StrongPasswordEncoder;
+import com.vamanos.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -21,7 +22,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private CustomUserDetailsService userDetailsService;
 
     @Bean
     public StrongPasswordEncoder passwordEncoder() {
@@ -37,18 +38,22 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-        http
-        //HTTP Basic authentication
-        //.csrf().disable()
-        .httpBasic()
-        .and()
-				
-				  .authorizeRequests() .antMatchers(HttpMethod.GET,"/addUser").hasRole("role_admin")
-				  .antMatchers(HttpMethod.POST,"/books").hasRole("ADMIN") 
-				  .antMatchers(HttpMethod.PUT,"/books/**").hasRole("ADMIN") 
-				  .antMatchers(HttpMethod.PATCH,"/books/**").hasRole("ADMIN") 
-				  .antMatchers(HttpMethod.DELETE,"/books/**").hasRole("ADMIN") 
-				  .and().formLogin().disable();
+		
+		  http //HTTP Basic authentication 
+		  .csrf().disable() 
+		  .httpBasic() .and()
+		  
+		  .authorizeRequests().antMatchers(HttpMethod.GET,"/addUser/**").hasAuthority("role_admin")
+		  .antMatchers(HttpMethod.POST,"/books").hasAuthority("role_admin")
+				/*
+				 * .antMatchers(HttpMethod.PUT,"/books/**").hasRole("ADMIN")
+				 * .antMatchers(HttpMethod.PATCH,"/books/**").hasRole("ADMIN")
+				 * .antMatchers(HttpMethod.DELETE,"/books/**").hasRole("ADMIN")
+				 */
+		  .and().formLogin().disable() 
+		  ;
+		 
+		
 	}
 
 	@Override

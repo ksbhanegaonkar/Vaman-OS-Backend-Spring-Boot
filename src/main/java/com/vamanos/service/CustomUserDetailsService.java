@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.vamanos.entity.Users;
 import com.vamanos.repo.UserRepository;
 
-@Service(value = "userDetailsService")
+@Service
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String input) {
 		Users user = userRepository.findByUsername(input);
-
+		System.out.println("User is ::: "+user);
 		if (user == null)
 			throw new BadCredentialsException("Bad credentials");
 
