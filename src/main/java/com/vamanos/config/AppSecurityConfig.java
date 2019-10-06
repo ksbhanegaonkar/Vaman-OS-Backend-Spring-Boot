@@ -50,7 +50,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
 				 * .antMatchers(HttpMethod.PATCH,"/books/**").hasRole("ADMIN")
 				 * .antMatchers(HttpMethod.DELETE,"/books/**").hasRole("ADMIN")
 				 */
-		  .and().formLogin().disable() 
+		  //.and().formLogin().disable() 
 		  ;
 		 
 		

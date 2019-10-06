@@ -1,10 +1,14 @@
 package com.vamanos.controller;
 
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.vamanos.util.DesktopUpdateUtil;
 
 @RestController
 @Validated
@@ -18,6 +22,13 @@ public class ActionController {
     String findAll(@PathVariable int id) {
     	//System.out.println("Logged in user is :::::"+SecurityContextHolder.getContext().getAuthentication().getName());
         return "Test"+id+SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+    
+    @PostMapping("/onaction")
+    public String onAction(String action) {
+    	System.out.println("On Action method called  !!"+action);
+    	DesktopUpdateUtil util = new DesktopUpdateUtil();
+        return util.updateDesktop(action);
     }
 
 	/*
