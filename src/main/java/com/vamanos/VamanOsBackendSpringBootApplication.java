@@ -1,8 +1,6 @@
 package com.vamanos;
 
-import java.awt.print.Book;
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.Filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.context.annotation.Bean;
 
-import com.vamanos.entity.Permissions;
-import com.vamanos.entity.Roles;
-import com.vamanos.entity.Users;
+import com.vamanos.filter.CORSResponseFilter;
 import com.vamanos.repo.RoleRepository;
 import com.vamanos.repo.UserRepository;
 
@@ -31,7 +27,12 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 	public static void main(String[] args) {
 		SpringApplication.run(VamanOsBackendSpringBootApplication.class, args);
 	}
-
+	
+	@Bean
+	public Filter compressFilter() {
+	    CORSResponseFilter corsFilter = new CORSResponseFilter();
+	    return corsFilter;
+	}
 	
 	  @Override public void run(String... args) {
 	  

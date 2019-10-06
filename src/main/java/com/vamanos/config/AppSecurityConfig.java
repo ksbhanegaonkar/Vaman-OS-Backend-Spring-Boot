@@ -37,8 +37,18 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-       http.authorizeRequests()
-       .antMatchers("/**").hasAnyRole().and().formLogin();
+        http
+        //HTTP Basic authentication
+        //.csrf().disable()
+        .httpBasic()
+        .and()
+				
+				  .authorizeRequests() .antMatchers(HttpMethod.GET,"/addUser").hasRole("role_admin")
+				  .antMatchers(HttpMethod.POST,"/books").hasRole("ADMIN") 
+				  .antMatchers(HttpMethod.PUT,"/books/**").hasRole("ADMIN") 
+				  .antMatchers(HttpMethod.PATCH,"/books/**").hasRole("ADMIN") 
+				  .antMatchers(HttpMethod.DELETE,"/books/**").hasRole("ADMIN") 
+				  .and().formLogin().disable();
 	}
 
 	@Override
