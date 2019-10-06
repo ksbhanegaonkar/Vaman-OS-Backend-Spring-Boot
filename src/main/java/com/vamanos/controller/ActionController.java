@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vamanos.util.DesktopUpdateUtil;
@@ -25,8 +26,8 @@ public class ActionController {
     }
     
     @PostMapping("/onaction")
-    public String onAction(String action) {
-    	System.out.println("On Action method called  !!"+action);
+    public String onAction(@RequestBody String action) {
+    	System.out.println("user is ::"+SecurityContextHolder.getContext().getAuthentication().getName());
     	DesktopUpdateUtil util = new DesktopUpdateUtil();
         return util.updateDesktop(action);
     }

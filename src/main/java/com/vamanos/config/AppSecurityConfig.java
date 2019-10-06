@@ -44,7 +44,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
 		  .httpBasic() .and()
 		  
 		  .authorizeRequests().antMatchers(HttpMethod.GET,"/addUser/**").hasAuthority("role_admin")
-		  .antMatchers(HttpMethod.POST,"/books").hasAuthority("role_admin")
+		  //.antMatchers(HttpMethod.POST,"/onaction").hasAuthority("role_admin").and().formLogin()
 				/*
 				 * .antMatchers(HttpMethod.PUT,"/books/**").hasRole("ADMIN")
 				 * .antMatchers(HttpMethod.PATCH,"/books/**").hasRole("ADMIN")

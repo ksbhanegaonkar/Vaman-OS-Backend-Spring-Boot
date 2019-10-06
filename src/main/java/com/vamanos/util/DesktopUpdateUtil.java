@@ -26,13 +26,13 @@ public class DesktopUpdateUtil {
 			node.set("desktopItems", desktopItemList.getDesktopItemList());
 			return node.toString();
 		}
-		/*
-		 * else if("update".equals(obj.get("state").getAsString())){
-		 * if("on-double-click".equals(obj.get("action").getAsString())) { return
-		 * desktopItemView.getDesktopItemView(obj.get("desktopItem").getAsString()); }
-		 * 
-		 * }
-		 */
+		
+		  else if("update".equals(JsonUtil.getJsonValue(state, "state"))){
+		  if("on-double-click".equals(JsonUtil.getJsonValue(state, "action"))) { return
+		  desktopItemView.getDesktopItemView(JsonUtil.getJsonValue(state, "desktopItem")); }
+		  
+		  }
+		 
 
 		return "{'empty':'empty'}";
 	}
