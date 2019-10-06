@@ -12,4 +12,11 @@ public class BaseIdEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int id;
 
+	@Override
+	public String toString() {
+		return "BaseIdEntity [id=" + id + "]";
+	}
+	
+	
+
 }
