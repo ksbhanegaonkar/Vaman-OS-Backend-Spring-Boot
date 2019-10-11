@@ -8,6 +8,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.core.annotation.Order;
@@ -21,6 +22,8 @@ public class CORSResponseFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 	    HttpServletResponse res = (HttpServletResponse) response;
+	    HttpServletRequest req = (HttpServletRequest) request;
+	    req.getHeaderNames();
 	    //response.setHeader(X_CLACKS_OVERHEAD, "GNU Terry Pratchett");
 	    res.setHeader("Access-Control-Allow-Origin", "*");
 	    res.setHeader("Access-Control-Allow-Credentials", "true");
