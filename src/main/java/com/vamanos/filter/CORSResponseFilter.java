@@ -22,14 +22,12 @@ public class CORSResponseFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 	    HttpServletResponse res = (HttpServletResponse) response;
-	    HttpServletRequest req = (HttpServletRequest) request;
-	    req.getHeaderNames();
-	    //response.setHeader(X_CLACKS_OVERHEAD, "GNU Terry Pratchett");
 	    res.setHeader("Access-Control-Allow-Origin", "*");
 	    res.setHeader("Access-Control-Allow-Credentials", "true");
 	    res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
 	    res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin");
 	    System.out.println("Filter executed...");
+	    res.setStatus(200);
 	    chain.doFilter(request, res);
 		
 	}

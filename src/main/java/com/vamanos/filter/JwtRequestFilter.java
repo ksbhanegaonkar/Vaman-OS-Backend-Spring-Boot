@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,73 +25,73 @@ import io.jsonwebtoken.ExpiredJwtException;
 
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-@Autowired
+	@Autowired
 
-private CustomUserDetailsService jwtUserDetailsService;
+	private CustomUserDetailsService jwtUserDetailsService;
 
-@Autowired
+	@Autowired
 
-private JwtTokenUtil jwtTokenUtil;
+	private JwtTokenUtil jwtTokenUtil;
 
-@Override
+	@Override
 
-protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 
-throws ServletException, IOException {
+			throws ServletException, IOException {
 
-final String requestTokenHeader = request.getHeader("Authorization");
+		final String requestTokenHeader = request.getHeader("Authorization");
 
-String username = null;
+		String username = null;
 
-String jwtToken = null;
+		String jwtToken = null;
 
 // JWT Token is in the form "Bearer token". Remove Bearer word and get
 
 // only the Token
 
-if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 
-jwtToken = requestTokenHeader.substring(7);
+			jwtToken = requestTokenHeader.substring(7);
 
-try {
+			try {
 
-username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 
-} catch (IllegalArgumentException e) {
+			} catch (IllegalArgumentException e) {
 
-System.out.println("Unable to get JWT Token");
+				System.out.println("Unable to get JWT Token");
 
-} catch (ExpiredJwtException e) {
+			} catch (ExpiredJwtException e) {
 
-System.out.println("JWT Token has expired");
+				System.out.println("JWT Token has expired");
 
-}
+			}
 
-} else {
+		} else {
 
-logger.warn("JWT Token does not begin with Bearer String");
+			logger.warn("JWT Token does not begin with Bearer String");
 
-}
+		}
 
 // Once we get the token validate it.
 
-if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
+			UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
 
 // if token is valid configure Spring Security to manually set
 
 // authentication
 
-if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
 
-UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 
-userDetails, null, userDetails.getAuthorities());
+						userDetails, null, userDetails.getAuthorities());
 
-usernamePasswordAuthenticationToken
+				usernamePasswordAuthenticationToken
 
-.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
 // After setting the Authentication in the context, we specify
 
@@ -98,14 +99,20 @@ usernamePasswordAuthenticationToken
 
 // Spring Security Configurations successfully.
 
-SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
-}
+			}
 
-}
+		}
 
-chain.doFilter(request, response);
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+		response.setHeader("Access-Control-Allow-Headers",
+				"Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin");
+		response.setStatus(200);
+		chain.doFilter(request, response);
 
-}
+	}
 
 }
