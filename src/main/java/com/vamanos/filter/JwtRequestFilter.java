@@ -2,19 +2,20 @@ package com.vamanos.filter;
 
 import java.io.IOException;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.vamanos.service.CustomUserDetailsService;
 import com.vamanos.util.JwtTokenUtil;
@@ -23,7 +24,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 
 @Component
 
-public class JwtRequestFilter extends OncePerRequestFilter {
+public class JwtRequestFilter implements Filter//extends OncePerRequestFilter 
+{
 
 	@Autowired
 
@@ -33,17 +35,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 	private JwtTokenUtil jwtTokenUtil;
 
-	@Override
-
+	//@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 
 			throws ServletException, IOException {
 
 		final String requestTokenHeader = request.getHeader("Authorization");
+				//"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJrZWRhciIsImV4cCI6MTU3MDg5MzM0OSwiaWF0IjoxNTcwODc1MzQ5fQ.h_xa1GbW4tMrdPOxt9spytSOaYz7lKP-sfWDp91clyKMA41qoNsSJmu3vHOJ9aG6R-eyaWDKuEywZsZGcLoJpg";//
 
 		String username = null;
 
 		String jwtToken = null;
+		
+		String a = request.getMethod();
 
 // JWT Token is in the form "Bearer token". Remove Bearer word and get
 
@@ -69,7 +73,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 		} else {
 
-			logger.warn("JWT Token does not begin with Bearer String");
+			//logger.warn("JWT Token does not begin with Bearer String");
 
 		}
 
@@ -108,11 +112,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		response.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-		response.setHeader("Access-Control-Allow-Headers",
-				"Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin");
+		response.setHeader("Access-Control-Allow-Headers","Access-Control-Allow-Headers, Authorization,Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin");
 		response.setStatus(200);
 		chain.doFilter(request, response);
 
+	}
+
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		// TODO Auto-generated method stub
+		doFilterInternal((HttpServletRequest)request,(HttpServletResponse)response,chain);
+		
 	}
 
 }

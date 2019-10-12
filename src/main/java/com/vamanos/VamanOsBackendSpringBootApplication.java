@@ -36,10 +36,11 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 	
 	  @Override public void run(String... args) {
 	  
-	  log.info("StartApplication..."); 
-	  System.out.println("role is : "+roleRepository.findByName("role_admin"));
-	 
 		/*
+		 * log.info("StartApplication...");
+		 * System.out.println("role is : "+roleRepository.findByName("role_admin"));
+		 * 
+		 * 
 		 * Users userNew = new Users();
 		 * 
 		 * userNew.setUsername("kedar1"); userNew.setPassword("kedar1");
@@ -52,6 +53,7 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 		 * 
 		 * userRepository.saveAndFlush(userNew);
 		 */
+		 
 	  
 	  }
 	  

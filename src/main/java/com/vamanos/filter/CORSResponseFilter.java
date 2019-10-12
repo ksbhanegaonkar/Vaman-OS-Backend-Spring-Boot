@@ -18,17 +18,29 @@ import org.springframework.stereotype.Component;
 public class CORSResponseFilter implements Filter{
 
 	@Override
-	@Order(1)
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-	    HttpServletResponse res = (HttpServletResponse) response;
-	    res.setHeader("Access-Control-Allow-Origin", "*");
-	    res.setHeader("Access-Control-Allow-Credentials", "true");
-	    res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-	    res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin");
-	    System.out.println("Filter executed...");
-	    res.setStatus(200);
-	    chain.doFilter(request, res);
+		
+		HttpServletRequest req = (HttpServletRequest)request;
+		String h = req.getHeader("Authorization");
+		String a = req.getHeader("Content-Type");
+		String b = req.getHeader("Access-Control-Allow-Origin");
+		String c = req.getHeader("Access-Control-Allow-Headers");
+		String d = req.getHeader("test");
+		String method = req.getMethod();
+		
+		
+			HttpServletResponse res = (HttpServletResponse) response;
+		    res.setHeader("Access-Control-Allow-Origin", "*");
+		    res.setHeader("Access-Control-Allow-Credentials", "true");
+		    res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
+		    res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Authorization,Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin,test");
+		    //res.setStatus(200);
+		    chain.doFilter(request, res);
+
+
+	    
+
 		
 	}
 

@@ -1,5 +1,7 @@
 package com.vamanos.util;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vamanos.model.ContextMenuList;
 import com.vamanos.model.DesktopItemList;
@@ -24,6 +26,7 @@ public class DesktopUpdateUtil {
 			node.set("startMenuOption", startMenuList.getStartMenuList());
 			node.set("contextMenuOption", contextMenuList.getcontextMenuList());
 			node.set("desktopItems", desktopItemList.getDesktopItemList());
+			node.put("loggedInUserName", SecurityContextHolder.getContext().getAuthentication().getName());
 			return node.toString();
 		}
 		
