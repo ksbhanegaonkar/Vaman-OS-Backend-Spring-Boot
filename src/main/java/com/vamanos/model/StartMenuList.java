@@ -14,7 +14,7 @@ public class StartMenuList {
 		startMenuList.add("My Folder");
 		startMenuList.add("My Bookmarks");
 		startMenuList.add("My Notes");
-		startMenuList.add("Logout 1");
+		startMenuList.add("Logout");
 		
 	}
 
