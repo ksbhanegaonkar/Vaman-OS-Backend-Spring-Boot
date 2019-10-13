@@ -22,17 +22,25 @@ public class DesktopUpdateUtil {
 			ObjectNode node = JsonUtil.getEmptyJsonObject();
 			startMenuList = new StartMenuList();
 			contextMenuList = new ContextMenuList();
-			desktopItemList = new DesktopItemList();
+			
 			node.set("startMenuOption", startMenuList.getStartMenuList());
 			node.set("contextMenuOption", contextMenuList.getcontextMenuList());
-			node.set("desktopItems", desktopItemList.getDesktopItemList());
+			//node.set("desktopItems", desktopItemList.getDesktopItemList());
 			node.put("loggedInUserName", SecurityContextHolder.getContext().getAuthentication().getName());
 			return node.toString();
 		}
 		
 		  else if("update".equals(JsonUtil.getJsonValue(state, "state"))){
-		  if("on-double-click".equals(JsonUtil.getJsonValue(state, "action"))) { return
-		  desktopItemView.getDesktopItemView(JsonUtil.getJsonValue(state, "desktopItem")); }
+		  if("on-double-click".equals(JsonUtil.getJsonValue(state, "action"))) 
+		  	{
+			  return desktopItemView.getDesktopItemView(JsonUtil.getJsonValue(state, "desktopItem"));  
+		  	}
+		  else if("on-desktop-item-load".equals(JsonUtil.getJsonValue(state, "action"))) 
+		  	{
+			  desktopItemList = new DesktopItemList();
+			  return desktopItemList.getDesktopItemList().toString();
+			 
+			}
 		  
 		  }
 		 
