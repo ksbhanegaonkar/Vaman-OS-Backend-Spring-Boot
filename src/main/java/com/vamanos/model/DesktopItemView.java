@@ -7,7 +7,7 @@ import com.vamanos.util.DesktopItemViewUtil;
 import com.vamanos.util.JsonUtil;
 
 public class DesktopItemView {
-	Map<String,Object> desktopItemView = new HashMap<>();
+	Map<String,Map<String,String>> desktopItemView = new HashMap<>();
 	DesktopItemViewUtil desktopItemViewUtil = new DesktopItemViewUtil();
 	public DesktopItemView() {
 		

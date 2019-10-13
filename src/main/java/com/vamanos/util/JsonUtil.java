@@ -53,10 +53,10 @@ public class JsonUtil {
 		return obj;
 	}
 	
-	public static ObjectNode getJsonObjectFromObjectMap(Map<String,Object> map) {
+	public static ObjectNode getJsonObjectFromObjectMap(Map<String,Map<String,String>> map) {
 		ObjectNode obj = getEmptyJsonObject();
 		for(String key : map.keySet()) {
-			obj.put(key, map.get(key).toString());
+			obj.set(key, getJsonObjectFromMap(map.get(key)));
 		}
 		return obj;
 	}
