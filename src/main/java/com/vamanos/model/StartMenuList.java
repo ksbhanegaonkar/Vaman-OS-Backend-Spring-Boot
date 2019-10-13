@@ -13,7 +13,7 @@ public class StartMenuList {
 		
 		startMenuList.add("My Folder");
 		startMenuList.add("My Bookmarks");
-		startMenuList.add("My Notes");
+		startMenuList.add("My Notes a");
 		startMenuList.add("Logout");
 		
 	}
