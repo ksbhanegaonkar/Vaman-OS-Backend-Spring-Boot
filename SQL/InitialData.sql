@@ -27,3 +27,48 @@ INSERT INTO ROLE_USER (ROLE_ID, USER_ID)
     (1, 1) /* role_admin assigned to admin user */,
     (2, 2) /* role_user assigned to user user */ ;
     
+
+=========================== Database design queries ================================
+create table APP_INSTANCE_DATA
+(
+     APP_ID SERIAL PRIMARY KEY,
+     APP_NAME CHARACTER VARYING(255) NOT NULL,
+     APP_TYPE CHARACTER VARYING(255) NOT NULL
+     
+);
+
+create table APP_INSTANCE_PAYLOAD
+(   
+    APP_ID INTEGER NOT NULL,
+    PAYLOAD BYTEA NOT NULL
+);
+
+create table TEAM_APPS
+(
+APP_ID INTEGER NOT NULL,
+TEAM_ID INTEGER NOT NULL
+);
+
+create table TEAMS
+(
+    TEAM_ID INTEGER NOT NULL,
+    TEAM_NAME CHARACTER VARYING(255) NOT NULL,
+    TEAM_DL CHARACTER VARYING(255) NOT NULL
+);
+
+create table USER_TEAM_RELATION
+(
+USER_ID INTEGER NOT NULL,
+TEAM_ID INTEGER NOT NULL
+);
+
+create table PERSONAL_APPS
+(
+USER_ID INTEGER NOT NULL,
+APP_ID INTEGER NOT NULL
+);
+
+create table GLOBAL_APPS
+(
+APP_ID INTEGER NOT NULL
+);
