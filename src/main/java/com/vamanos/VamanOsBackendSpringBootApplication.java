@@ -10,9 +10,21 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.vamanos.entity.AppInstanceData;
+import com.vamanos.entity.AppInstancePayload;
+import com.vamanos.entity.GlobalApps;
+import com.vamanos.entity.PersonalApps;
+import com.vamanos.entity.TeamApps;
+import com.vamanos.entity.Teams;
+import com.vamanos.entity.UserTeamRelation;
 import com.vamanos.filter.CORSResponseFilter;
-import com.vamanos.repo.RoleRepository;
-import com.vamanos.repo.UserRepository;
+import com.vamanos.repo.AppInstanceDataRepository;
+import com.vamanos.repo.AppInstancePayloadRepository;
+import com.vamanos.repo.GlobalAppsRepository;
+import com.vamanos.repo.PersonalAppsRepository;
+import com.vamanos.repo.TeamAppsRepository;
+import com.vamanos.repo.TeamsRepository;
+import com.vamanos.repo.UserTeamRelationRepository;
 
 @SpringBootApplication
 public class VamanOsBackendSpringBootApplication implements CommandLineRunner 
@@ -20,9 +32,8 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 	private static final Logger log = LoggerFactory.getLogger(VamanOsBackendSpringBootApplication.class);
 
 	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private RoleRepository roleRepository;
+	private PersonalAppsRepository appRepo;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(VamanOsBackendSpringBootApplication.class, args);
@@ -34,30 +45,16 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 	    return corsFilter;
 	}
 	
-	  @Override public void run(String... args) {
-	  
-		/*
-		 * log.info("StartApplication...");
-		 * System.out.println("role is : "+roleRepository.findByName("role_admin"));
-		 * 
-		 * 
-		 * Users userNew = new Users();
-		 * 
-		 * userNew.setUsername("kedar1"); userNew.setPassword("kedar1");
-		 * userNew.setEmail("kedar1@test.com"); Permissions permissions = new
-		 * Permissions(); permissions.setName("can_create_user"); Roles roles = new
-		 * Roles(); roles.getPermissions().add(permissions);
-		 * userNew.getRoles().add(roles);
-		 * 
-		 * 
-		 * 
-		 * userRepository.saveAndFlush(userNew);
-		 */
-		 
-	  
+	  @Override 
+	  public void run(String... args) {
+		  
+		  System.out.println("Saving data...");
+		  PersonalApps app = new PersonalApps();
+		  app.setUserId(555);
+		  app.setAppId(888);
+		  appRepo.save(app);
+		  System.out.println("Saving completed...");
+
 	  }
-	  
-	 
-	 
 
 }
