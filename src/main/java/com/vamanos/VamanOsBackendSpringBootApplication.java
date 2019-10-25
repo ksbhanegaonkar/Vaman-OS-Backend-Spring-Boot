@@ -1,5 +1,7 @@
 package com.vamanos;
 
+import java.util.List;
+
 import javax.servlet.Filter;
 
 import org.slf4j.Logger;
@@ -10,30 +12,20 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.vamanos.entity.AppInstanceData;
-import com.vamanos.entity.AppInstancePayload;
 import com.vamanos.entity.GlobalApps;
-import com.vamanos.entity.PersonalApps;
-import com.vamanos.entity.TeamApps;
-import com.vamanos.entity.Teams;
-import com.vamanos.entity.UserTeamRelation;
 import com.vamanos.filter.CORSResponseFilter;
-import com.vamanos.repo.AppInstanceDataRepository;
-import com.vamanos.repo.AppInstancePayloadRepository;
 import com.vamanos.repo.GlobalAppsRepository;
-import com.vamanos.repo.PersonalAppsRepository;
-import com.vamanos.repo.TeamAppsRepository;
-import com.vamanos.repo.TeamsRepository;
-import com.vamanos.repo.UserTeamRelationRepository;
+import com.vamanos.service.AppService;
+import com.vamanos.util.DesktopUpdateUtil;
 
 @SpringBootApplication
 public class VamanOsBackendSpringBootApplication implements CommandLineRunner 
 {
 	private static final Logger log = LoggerFactory.getLogger(VamanOsBackendSpringBootApplication.class);
 
-	@Autowired
-	private PersonalAppsRepository appRepo;
-
+	
+	  @Autowired private GlobalAppsRepository appRepo;
+	 
 
 	public static void main(String[] args) {
 		SpringApplication.run(VamanOsBackendSpringBootApplication.class, args);
@@ -45,16 +37,21 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 	    return corsFilter;
 	}
 	
+
+	
+
+	
+
+	
 	  @Override 
 	  public void run(String... args) {
 		  
-		  System.out.println("Saving data...");
-		  PersonalApps app = new PersonalApps();
-		  app.setUserId(555);
-		  app.setAppId(888);
-		  appRepo.save(app);
-		  System.out.println("Saving completed...");
-
+		/*
+		 * List<GlobalApps> globalApps = appRepo.findAll();
+		 * 
+		 * System.out.println(globalApps);
+		 */
+		 
 	  }
 
 }

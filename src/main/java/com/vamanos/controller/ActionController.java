@@ -1,6 +1,7 @@
 package com.vamanos.controller;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,8 @@ public class ActionController {
 	/*
 	 * @Autowired private BookRepository repository;
 	 */
+	@Autowired
+	DesktopUpdateUtil util;
 
     // Find
     @GetMapping("/addUser/{id}")
@@ -27,8 +30,8 @@ public class ActionController {
     
     @PostMapping("/onaction")
     public String onAction(@RequestBody String action) {
-    	System.out.println("user is ::"+SecurityContextHolder.getContext().getAuthentication().getName());
-    	DesktopUpdateUtil util = new DesktopUpdateUtil();
+    	//System.out.println("user is ::"+SecurityContextHolder.getContext().getAuthentication().getName());
+    	//DesktopUpdateUtil util = new DesktopUpdateUtil();
         return util.updateDesktop(action);
     }
 

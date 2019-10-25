@@ -3,6 +3,9 @@ package com.vamanos.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DesktopItemViewUtil {
 
 	public Map<String, Map<String,String>> getDesktopItemViewInfo(String item) {

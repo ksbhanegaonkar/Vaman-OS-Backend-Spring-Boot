@@ -9,9 +9,10 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -68,11 +69,22 @@ public class Users extends BaseIdEntity implements UserDetails {
 	private boolean credentialsNonExpired;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "role_user", joinColumns = {
-			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "role_id", referencedColumnName = "id") })
+	@JoinTable(name = "role_user", 
+			joinColumns = {
+							@JoinColumn(name = "user_id", referencedColumnName = "id") }, 
+			inverseJoinColumns = {
+							@JoinColumn(name = "role_id", referencedColumnName = "id") })
 	private List<Roles> roles = new ArrayList<Roles>();
-
+	
+	/*
+	 * @OneToMany(fetch = FetchType.LAZY)
+	 * 
+	 * @JoinTable(name = "USER_TEAM_RELATION",joinColumns = {
+	 * 
+	 * @JoinColumn(name = "USER_ID",referencedColumnName = "id")}) private
+	 * List<UserTeamRelation> userTeams = new ArrayList<>();
+	 */
+	
 	@Override
 	public boolean isEnabled() {
 		return enabled;

@@ -1,6 +1,8 @@
 package com.vamanos.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vamanos.model.ContextMenuList;
@@ -8,8 +10,14 @@ import com.vamanos.model.DesktopItemList;
 import com.vamanos.model.DesktopItemView;
 import com.vamanos.model.IconsList;
 import com.vamanos.model.StartMenuList;
+import com.vamanos.service.AppService;
 
+@Component
 public class DesktopUpdateUtil {
+	
+	@Autowired
+	AppService appService;
+	
 	StartMenuList startMenuList = null;
 	ContextMenuList contextMenuList = null;
 	DesktopItemList desktopItemList = null;
@@ -48,7 +56,7 @@ public class DesktopUpdateUtil {
 		  else if("on-desktop-item-load".equals(JsonUtil.getJsonValue(state, "action"))) 
 		  	{
 			  desktopItemList = new DesktopItemList();
-			  return desktopItemList.getDesktopItemList().toString();
+			  return desktopItemList.getDesktopItemList(appService).toString();
 			 
 			}
 		  
