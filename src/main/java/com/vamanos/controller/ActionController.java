@@ -43,6 +43,11 @@ public class ActionController {
     	//DesktopUpdateUtil util = new DesktopUpdateUtil();
         return util.getDesktopApps();
     }
+    
+    @GetMapping("/getapppayload/{appId}")
+    public String getAppPayload(@PathVariable int appId) {
+        return util.getAppPayload(appId);
+    }
 
 	/*
 	 * // Save

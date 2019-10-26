@@ -19,8 +19,8 @@ public class AppInstancePayload extends BaseIdEntity{
 		this.appId = appId;
 	}
 
-	public byte[] getPayload() {
-		return payload;
+	public String getPayload() {
+		return new String(payload);
 	}
 
 	public void setPayload(byte[] payload) {

@@ -78,4 +78,8 @@ public class DesktopUpdateUtil {
 		 List<AppInstanceData> globalApps = appService.getGlobalApps();
 		 return JsonUtil.getAppListAsJsonArray(globalApps);
 	}
+	
+	public String getAppPayload(int appId) {
+		 return appService.getAppPayload(appId);
+	}
 }

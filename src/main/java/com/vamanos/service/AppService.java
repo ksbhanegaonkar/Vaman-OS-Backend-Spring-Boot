@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vamanos.entity.AppInstanceData;
+import com.vamanos.entity.AppInstancePayload;
 import com.vamanos.entity.GlobalApps;
 import com.vamanos.repo.AppInstanceDataRepository;
+import com.vamanos.repo.AppInstancePayloadRepository;
 import com.vamanos.repo.GlobalAppsRepository;
 
 @Service
@@ -20,6 +22,8 @@ public class AppService {
 	GlobalAppsRepository globalAppsRepository;
 	@Autowired
 	AppInstanceDataRepository appInstanceDataRepository;
+	@Autowired
+	AppInstancePayloadRepository appInstancePayloadRepository;
 	
 	public Map<String, String> getGlobalAppsOld(){
 		Map<String,String> desktopItemList = new HashMap<>();
@@ -49,5 +53,10 @@ public class AppService {
 		});
 		
 		return desktopItems;
+	}
+	
+	public String getAppPayload(int appId) {
+		AppInstancePayload payload = appInstancePayloadRepository.getAppPayloadByAppId(appId);
+		return payload.getPayload();
 	}
 }
