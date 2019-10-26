@@ -25,7 +25,7 @@ public class DesktopItemList {
 	}
 
 	public ObjectNode getDesktopItemList(AppService appService) {
-		desktopItemList.putAll(appService.getGlobalApps());
+		//desktopItemList.putAll(appService.getGlobalApps());
 		return JsonUtil.getJsonObjectFromMap(desktopItemList);
 	}
 

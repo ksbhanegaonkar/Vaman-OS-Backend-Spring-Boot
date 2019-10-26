@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vamanos.util.DesktopUpdateUtil;
 
 @RestController
@@ -29,10 +31,17 @@ public class ActionController {
     }
     
     @PostMapping("/onaction")
-    public String onAction(@RequestBody String action) {
+    public ObjectNode onAction(@RequestBody String action) {
     	//System.out.println("user is ::"+SecurityContextHolder.getContext().getAuthentication().getName());
     	//DesktopUpdateUtil util = new DesktopUpdateUtil();
         return util.updateDesktop(action);
+    }
+    
+    @GetMapping("/getdesktopitems")
+    public ArrayNode getDesktopItems() {
+    	//System.out.println("user is ::"+SecurityContextHolder.getContext().getAuthentication().getName());
+    	//DesktopUpdateUtil util = new DesktopUpdateUtil();
+        return util.getDesktopApps();
     }
 
 	/*

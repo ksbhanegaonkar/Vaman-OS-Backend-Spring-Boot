@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.vamanos.entity.AppInstanceData;
 import com.vamanos.model.ContextMenuList;
 import com.vamanos.model.DesktopItemList;
 import com.vamanos.model.StartMenuList;
@@ -84,6 +85,22 @@ public class JsonUtil {
 		
 		System.out.println(util.updateDesktop("{\"state\":\"init\"}"));
 		
+	}
+	
+	
+	public static ObjectNode getAppInstanceDataAsJsonObject(AppInstanceData app) {
+		
+		ObjectNode node = getEmptyJsonObject();
+		node.put("appId", app.getId());
+		node.put("appName", app.getName());
+		node.put("appType", app.getType());
+		return node;
+	}
+	
+	public static ArrayNode getAppListAsJsonArray(List<AppInstanceData> apps) {
+		ArrayNode arrayNode = mapper.createArrayNode();
+		apps.forEach(v->arrayNode.add(getAppInstanceDataAsJsonObject(v)));
+		return arrayNode;
 	}
 	
 	

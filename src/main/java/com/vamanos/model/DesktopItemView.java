@@ -3,6 +3,7 @@ package com.vamanos.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vamanos.util.DesktopItemViewUtil;
 import com.vamanos.util.JsonUtil;
 
@@ -13,10 +14,10 @@ public class DesktopItemView {
 		
 	}
 
-	public String getDesktopItemView(String item) {
+	public ObjectNode getDesktopItemView(String item) {
 
 	    desktopItemView = desktopItemViewUtil.getDesktopItemViewInfo(item);
-		return JsonUtil.getJsonObjectFromObjectMap(desktopItemView).toString();
+		return JsonUtil.getJsonObjectFromObjectMap(desktopItemView);
 	}
 
 

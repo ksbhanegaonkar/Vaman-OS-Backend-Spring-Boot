@@ -21,7 +21,7 @@ public class AppService {
 	@Autowired
 	AppInstanceDataRepository appInstanceDataRepository;
 	
-	public Map<String, String> getGlobalApps(){
+	public Map<String, String> getGlobalAppsOld(){
 		Map<String,String> desktopItemList = new HashMap<>();
 		List<GlobalApps> globalApps = globalAppsRepository.findAll();
 		List<Integer> globalAppIds = new ArrayList<>();
@@ -34,5 +34,20 @@ public class AppService {
 		});
 		
 		return desktopItemList;
+	}
+	
+	public List<AppInstanceData> getGlobalApps(){
+		List<AppInstanceData> desktopItems = new ArrayList<>();
+		List<GlobalApps> globalApps = globalAppsRepository.findAll();
+		List<Integer> globalAppIds = new ArrayList<>();
+		globalApps.stream().forEach(app ->{
+			globalAppIds.add(app.getAppId());
+		});
+		List<AppInstanceData> appInstanceData = appInstanceDataRepository.findAllById(globalAppIds);
+		appInstanceData.forEach(data ->{
+			desktopItems.add(data);
+		});
+		
+		return desktopItems;
 	}
 }

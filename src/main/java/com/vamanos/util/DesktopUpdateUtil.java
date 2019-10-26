@@ -1,10 +1,15 @@
 package com.vamanos.util;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.vamanos.entity.AppInstanceData;
+import com.vamanos.entity.GlobalApps;
 import com.vamanos.model.ContextMenuList;
 import com.vamanos.model.DesktopItemList;
 import com.vamanos.model.DesktopItemView;
@@ -24,7 +29,7 @@ public class DesktopUpdateUtil {
 	DesktopItemView desktopItemView = null;
 	IconsList iconsList = null;
 	
-	public String updateDesktop(String state) {
+	public ObjectNode updateDesktop(String state) {
 		desktopItemView = new DesktopItemView();
 
 
@@ -39,7 +44,7 @@ public class DesktopUpdateUtil {
 			node.set("contextMenuOption", contextMenuList.getcontextMenuList());
 			node.set("iconsList", iconsList.getIconList());
 			node.put("loggedInUserName", SecurityContextHolder.getContext().getAuthentication().getName());
-			return node.toString();
+			return node;
 		}
 		
 		  else if("update".equals(JsonUtil.getJsonValue(state, "state"))){
@@ -50,19 +55,27 @@ public class DesktopUpdateUtil {
 		  else if("on-desktop-icons-load".equals(JsonUtil.getJsonValue(state, "action"))) 
 		  	{
 			  iconsList = new IconsList();
-			  return iconsList.getIconList().toString();
+			  return iconsList.getIconList();
 			 
 			}
 		  else if("on-desktop-item-load".equals(JsonUtil.getJsonValue(state, "action"))) 
 		  	{
 			  desktopItemList = new DesktopItemList();
-			  return desktopItemList.getDesktopItemList(appService).toString();
+			  
+			 
+			  
+			  return null;
 			 
 			}
 		  
 		  }
 		 
 
-		return "{'empty':'empty'}";
+		return JsonUtil.getEmptyJsonObject();
+	}
+	
+	public ArrayNode getDesktopApps() {
+		 List<AppInstanceData> globalApps = appService.getGlobalApps();
+		 return JsonUtil.getAppListAsJsonArray(globalApps);
 	}
 }
