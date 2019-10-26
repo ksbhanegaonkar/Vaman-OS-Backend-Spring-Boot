@@ -56,7 +56,14 @@ public class AppService {
 	}
 	
 	public String getAppPayload(int appId) {
-		AppInstancePayload payload = appInstancePayloadRepository.getAppPayloadByAppId(appId);
-		return payload.getPayload();
+		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppId(appId);
+		return app.getPayload();
+	}
+	
+	public String updateAppPayload(int appId,String payload) {
+		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppId(appId);
+		app.setPayload(payload.getBytes());
+		appInstancePayloadRepository.save(app);
+		return app.getPayload();
 	}
 }

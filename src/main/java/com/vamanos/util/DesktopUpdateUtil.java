@@ -82,4 +82,8 @@ public class DesktopUpdateUtil {
 	public String getAppPayload(int appId) {
 		 return appService.getAppPayload(appId);
 	}
+	
+	public String updatePayload(int appId,String payload) {
+		 return appService.updateAppPayload(appId, payload);
+	}
 }

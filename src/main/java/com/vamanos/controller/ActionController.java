@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vamanos.util.DesktopUpdateUtil;
+import com.vamanos.util.JsonUtil;
 
 @RestController
 @Validated
@@ -45,8 +46,18 @@ public class ActionController {
     }
     
     @GetMapping("/getapppayload/{appId}")
-    public String getAppPayload(@PathVariable int appId) {
-        return util.getAppPayload(appId);
+    public ObjectNode getAppPayload(@PathVariable int appId) {
+    	ObjectNode node = JsonUtil.getEmptyJsonObject();
+    	node.put("payload", util.getAppPayload(appId));
+        return node;
+    }
+    
+    @PostMapping("/updateapppayload")
+    public ObjectNode updatePayload(@RequestBody ObjectNode app) {
+    	int appId = app.get("appId").asInt();
+    	String payload = app.get("payload").asText();
+    	util.updatePayload(appId, payload);
+    	return app;
     }
 
 	/*
