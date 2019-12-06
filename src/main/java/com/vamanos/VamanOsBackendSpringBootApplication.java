@@ -51,6 +51,8 @@ public class VamanOsBackendSpringBootApplication implements CommandLineRunner
 		 * 
 		 * System.out.println(globalApps);
 		 */
+		  //System.out.println(appRepo.existsByAppId(9));
+		  
 		 
 	  }
 

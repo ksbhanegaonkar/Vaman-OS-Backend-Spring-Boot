@@ -88,4 +88,14 @@ public class DesktopUpdateUtil {
 	public String updatePayload(int appId,String payload) {
 		 return appService.updateAppPayload(appId, payload);
 	}
+	
+	public void onContextMenuOptionClick(int appId, String action) {
+		System.out.println("app id is :::"+appId+" Action is ::: "+action);
+		if(action.contains("Copy")) {
+			appService.copyApp(appId);
+		}
+		else if(action.contains("Paste")) {
+			appService.pasteApp(appId);
+		}
+	}
 }

@@ -63,6 +63,10 @@ public class ActionController {
     @PostMapping("/oncontextmenuaction")
     public ObjectNode onContextMenuOption(@RequestBody ObjectNode app) {
     	System.out.println(app);
+    	String item = app.get("item").asText();
+    	String option = app.get("option").asText();
+    	int appId = Integer.parseInt(item.split("/")[2]);
+    	util.onContextMenuOptionClick(appId, option);
     	return app;
     }
 

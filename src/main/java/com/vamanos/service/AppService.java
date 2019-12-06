@@ -21,6 +21,9 @@ import com.vamanos.repo.GlobalAppsRepository;
 @Service
 public class AppService {
 	
+	private AppInstanceData copiedAppInstanceData;
+	private AppInstancePayload copiedAppInstancePayload;
+	
 	@Autowired
 	GlobalAppsRepository globalAppsRepository;
 	@Autowired
@@ -79,5 +82,33 @@ public class AppService {
 		return contextMenuOptions;
 	}
 	
+	
+	public void copyApp(int appId) {
+		copiedAppInstanceData = new AppInstanceData();
+		copiedAppInstancePayload = new AppInstancePayload();
+		
+		AppInstanceData appDataToCopy = appInstanceDataRepository.getAppById(appId);
+		AppInstancePayload appPayloadToCopy = appInstancePayloadRepository.getAppPayloadByAppId(appId);
+		
+		copiedAppInstanceData.setName("Copy of - "+appDataToCopy.getName());
+		copiedAppInstanceData.setType(appDataToCopy.getType());
+		
+
+		copiedAppInstancePayload.setPayload(appPayloadToCopy.getPayload().getBytes());
+		
+		
+		
+	}
+	
+	public void pasteApp(int appId) {
+		appInstanceDataRepository.save(copiedAppInstanceData);
+		copiedAppInstancePayload.setAppId(copiedAppInstanceData.getId());
+		appInstancePayloadRepository.save(copiedAppInstancePayload);
+		if(globalAppsRepository.existsByAppId(appId)){
+			GlobalApps app = new GlobalApps();
+			app.setAppId(copiedAppInstanceData.getId());
+			globalAppsRepository.save(app);
+		}
+	}
 	
 }

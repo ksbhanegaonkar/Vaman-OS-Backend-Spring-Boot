@@ -10,7 +10,7 @@ import com.vamanos.entity.AppInstanceData;
 @Repository
 @Transactional
 public interface AppInstanceDataRepository extends JpaRepository<AppInstanceData,Integer>{
-	public AppInstanceData getAppById(Long id);
+	public AppInstanceData getAppById(int id);
 
 	
 }
