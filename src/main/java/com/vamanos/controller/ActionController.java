@@ -59,6 +59,12 @@ public class ActionController {
     	util.updatePayload(appId, payload);
     	return app;
     }
+    
+    @PostMapping("/oncontextmenuaction")
+    public ObjectNode onContextMenuOption(@RequestBody ObjectNode app) {
+    	System.out.println(app);
+    	return app;
+    }
 
 	/*
 	 * // Save
