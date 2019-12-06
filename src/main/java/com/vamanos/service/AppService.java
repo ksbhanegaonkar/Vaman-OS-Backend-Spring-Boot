@@ -1,6 +1,7 @@
 package com.vamanos.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.vamanos.entity.AppInstanceData;
 import com.vamanos.entity.AppInstancePayload;
+import com.vamanos.entity.ContextMenuOptions;
 import com.vamanos.entity.GlobalApps;
 import com.vamanos.repo.AppInstanceDataRepository;
 import com.vamanos.repo.AppInstancePayloadRepository;
+import com.vamanos.repo.ContextMenuOptionRepository;
 import com.vamanos.repo.GlobalAppsRepository;
 
 @Service
@@ -24,6 +27,8 @@ public class AppService {
 	AppInstanceDataRepository appInstanceDataRepository;
 	@Autowired
 	AppInstancePayloadRepository appInstancePayloadRepository;
+	@Autowired
+	ContextMenuOptionRepository contextMenuOptionRepository;
 	
 	public Map<String, String> getGlobalAppsOld(){
 		Map<String,String> desktopItemList = new HashMap<>();
@@ -66,4 +71,13 @@ public class AppService {
 		appInstancePayloadRepository.save(app);
 		return app.getPayload();
 	}
+	
+	public Map<String,List<String>> getContextMenuOptions(){
+		Map<String,List<String>> contextMenuOptions = new HashMap<>();
+		List<ContextMenuOptions> allOptionList = contextMenuOptionRepository.findAll();
+		allOptionList.stream().forEach(i->contextMenuOptions.put(i.getType(),Arrays.asList(i.getOptionList().split(","))));
+		return contextMenuOptions;
+	}
+	
+	
 }

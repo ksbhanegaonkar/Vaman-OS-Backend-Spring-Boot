@@ -41,9 +41,11 @@ public class DesktopUpdateUtil {
 		
 			
 			node.set("startMenuOption", startMenuList.getStartMenuList());
-			node.set("contextMenuOption", contextMenuList.getcontextMenuList());
+			//node.set("contextMenuOption", contextMenuList.getcontextMenuList());
+			node.set("contextMenuOption", JsonUtil.getJsonObjectFromListMap(appService.getContextMenuOptions()));
 			node.set("iconsList", iconsList.getIconList());
 			node.put("loggedInUserName", SecurityContextHolder.getContext().getAuthentication().getName());
+			//System.out.println("Context menu list is ::::"+appService.getContextMenuOptions());
 			return node;
 		}
 		
