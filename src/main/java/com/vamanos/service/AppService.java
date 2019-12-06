@@ -101,14 +101,20 @@ public class AppService {
 	}
 	
 	public void pasteApp(int appId) {
-		appInstanceDataRepository.save(copiedAppInstanceData);
-		copiedAppInstancePayload.setAppId(copiedAppInstanceData.getId());
-		appInstancePayloadRepository.save(copiedAppInstancePayload);
-		if(globalAppsRepository.existsByAppId(appId)){
-			GlobalApps app = new GlobalApps();
-			app.setAppId(copiedAppInstanceData.getId());
-			globalAppsRepository.save(app);
+		if(copiedAppInstanceData != null && copiedAppInstancePayload != null) {
+			appInstanceDataRepository.save(copiedAppInstanceData);
+			copiedAppInstancePayload.setAppId(copiedAppInstanceData.getId());
+			appInstancePayloadRepository.save(copiedAppInstancePayload);
+			if(globalAppsRepository.existsByAppId(appId)){
+				GlobalApps app = new GlobalApps();
+				app.setAppId(copiedAppInstanceData.getId());
+				globalAppsRepository.save(app);
+			}
 		}
+		copiedAppInstanceData = null;
+		copiedAppInstancePayload = null;
 	}
+	
+
 	
 }
