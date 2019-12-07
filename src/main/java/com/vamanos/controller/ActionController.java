@@ -66,7 +66,9 @@ public class ActionController {
     	String item = app.get("item").asText();
     	String option = app.get("option").asText();
     	int appId = Integer.parseInt(item.split("/")[2]);
-    	util.onContextMenuOptionClick(appId, option);
+    	String payload = util.onContextMenuOptionClick(appId, option);
+    	app.put("payload", payload);
+    	app.put("fileName", item.split("/")[3]);
     	return app;
     }
 
