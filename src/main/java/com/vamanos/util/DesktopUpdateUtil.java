@@ -103,4 +103,28 @@ public class DesktopUpdateUtil {
 		}
 		return payload;
 	}
+	
+	public void uploadFile(String completeFileName, String payload) {
+		String fileName = null;
+		String fileType = null;
+		String [] splitFilePath = null;
+		if(completeFileName.contains("/")){
+			splitFilePath = completeFileName.split("/");
+		}else if(completeFileName.contains("\\")) {
+			splitFilePath = completeFileName.split("\\\\");
+		}
+		fileName = splitFilePath[splitFilePath.length-1];
+		if(fileName.contains("txt")) {
+			fileType = "file";
+		}else if(fileName.contains("doc")) {
+			fileType = "file";
+		}else if(fileName.contains("xls")) {
+			fileType = "file";
+		}else if(fileName.contains("pdf")) {
+			fileType = "pdf-file";
+		}else if(fileName.contains("ppt")) {
+			fileType = "ppt-file";
+		}
+		appService.createNewApp(fileName,fileType,payload);
+	}
 }

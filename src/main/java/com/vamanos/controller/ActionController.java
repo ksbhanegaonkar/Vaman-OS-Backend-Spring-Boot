@@ -71,6 +71,14 @@ public class ActionController {
     	app.put("fileName", item.split("/")[3]);
     	return app;
     }
+    
+    @PostMapping("/uploadfile")
+    public ObjectNode uploadFileAndCreateApp(@RequestBody ObjectNode app) {
+    	String fileName = app.get("fileName").asText();
+    	String payload = app.get("payload").asText();
+    	util.uploadFile(fileName, payload);
+    	return app;
+    }
 
 	/*
 	 * // Save

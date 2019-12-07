@@ -114,6 +114,20 @@ public class AppService {
 		copiedAppInstanceData = null;
 		copiedAppInstancePayload = null;
 	}
+
+	public void createNewApp(String fileName, String fileType, String payload) {
+		AppInstanceData newAppInstanceData = new AppInstanceData();
+		AppInstancePayload newAppInstancePayload = new AppInstancePayload();
+		newAppInstanceData.setName(fileName);
+		newAppInstanceData.setType(fileType);
+		appInstanceDataRepository.save(newAppInstanceData);
+		newAppInstancePayload.setAppId(newAppInstanceData.getId());
+		newAppInstancePayload.setPayload(payload.getBytes());
+		appInstancePayloadRepository.save(newAppInstancePayload);
+		GlobalApps app = new GlobalApps();
+		app.setAppId(newAppInstanceData.getId());
+		globalAppsRepository.save(app);
+	}
 	
 
 	
