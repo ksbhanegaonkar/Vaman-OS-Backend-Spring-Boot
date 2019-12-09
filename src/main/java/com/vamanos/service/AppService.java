@@ -1,5 +1,6 @@
 package com.vamanos.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.vamanos.entity.AppInstanceData;
 import com.vamanos.entity.AppInstancePayload;
@@ -115,18 +117,23 @@ public class AppService {
 		copiedAppInstancePayload = null;
 	}
 
-	public void createNewApp(String fileName, String fileType, String payload) {
+	public void createNewApp(String fileName, String fileType,MultipartFile file) throws IOException {
 		AppInstanceData newAppInstanceData = new AppInstanceData();
 		AppInstancePayload newAppInstancePayload = new AppInstancePayload();
 		newAppInstanceData.setName(fileName);
 		newAppInstanceData.setType(fileType);
 		appInstanceDataRepository.save(newAppInstanceData);
 		newAppInstancePayload.setAppId(newAppInstanceData.getId());
-		newAppInstancePayload.setPayload(payload.getBytes());
+		newAppInstancePayload.setPayload(file.getBytes());
 		appInstancePayloadRepository.save(newAppInstancePayload);
 		GlobalApps app = new GlobalApps();
 		app.setAppId(newAppInstanceData.getId());
 		globalAppsRepository.save(app);
+	}
+
+	public byte[] getAppPayloadAsFile(int appId) {
+		AppInstancePayload app = appInstancePayloadRepository.getAppPayloadByAppId(appId);
+		return app.getPayloadAsBytes();
 	}
 	
 

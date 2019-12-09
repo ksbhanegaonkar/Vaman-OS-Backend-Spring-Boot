@@ -1,15 +1,16 @@
 package com.vamanos.util;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vamanos.entity.AppInstanceData;
-import com.vamanos.entity.GlobalApps;
 import com.vamanos.model.ContextMenuList;
 import com.vamanos.model.DesktopItemList;
 import com.vamanos.model.DesktopItemView;
@@ -104,27 +105,24 @@ public class DesktopUpdateUtil {
 		return payload;
 	}
 	
-	public void uploadFile(String completeFileName, String payload) {
-		String fileName = null;
-		String fileType = null;
-		String [] splitFilePath = null;
-		if(completeFileName.contains("/")){
-			splitFilePath = completeFileName.split("/");
-		}else if(completeFileName.contains("\\")) {
-			splitFilePath = completeFileName.split("\\\\");
+	public void uploadFile(String fileName, MultipartFile file) {
+		String fileType = "file";
+		/*
+		 * if(fileName.contains("txt")) { fileType = "file"; }else
+		 * if(fileName.contains("doc")) { fileType = "file"; }else
+		 * if(fileName.contains("xls")) { fileType = "file"; }else
+		 * if(fileName.contains("pdf")) { fileType = "pdf-file"; }else
+		 * if(fileName.contains("ppt")) { fileType = "ppt-file"; }
+		 */
+		try {
+			appService.createNewApp(fileName,fileType,file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		fileName = splitFilePath[splitFilePath.length-1];
-		if(fileName.contains("txt")) {
-			fileType = "file";
-		}else if(fileName.contains("doc")) {
-			fileType = "file";
-		}else if(fileName.contains("xls")) {
-			fileType = "file";
-		}else if(fileName.contains("pdf")) {
-			fileType = "pdf-file";
-		}else if(fileName.contains("ppt")) {
-			fileType = "ppt-file";
-		}
-		appService.createNewApp(fileName,fileType,payload);
+	}
+
+	public byte[] getAppPayloadAsFile(int appId) {
+		return appService.getAppPayloadAsFile(appId);
 	}
 }
