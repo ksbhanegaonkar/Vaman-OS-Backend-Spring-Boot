@@ -22,13 +22,6 @@ public class CORSResponseFilter implements Filter{
 			throws IOException, ServletException {
 		
 		HttpServletRequest req = (HttpServletRequest)request;
-		String h = req.getHeader("Authorization");
-		String a = req.getHeader("Content-Type");
-		String b = req.getHeader("Access-Control-Allow-Origin");
-		String c = req.getHeader("Access-Control-Allow-Headers");
-		String d = req.getHeader("test");
-		String method = req.getMethod();
-		
 		
 			HttpServletResponse res = (HttpServletResponse) response;
 		    res.setHeader("Access-Control-Allow-Origin", "*");

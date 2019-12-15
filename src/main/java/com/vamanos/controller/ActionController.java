@@ -9,6 +9,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -99,22 +100,38 @@ public class ActionController {
         return ResponseEntity.ok().build();
     }
     
-    @PostMapping("/downloadapp")
-    public ResponseEntity downloadFile1(@RequestBody ObjectNode app) throws IOException {
-    	String item = app.get("item").asText();
-    	String appName = item.split("/")[3];
-    	int appId = Integer.parseInt(item.split("/")[2]);
-        File file = new File(appName);
-        try (FileOutputStream fileOuputStream = new FileOutputStream(file)){
-            fileOuputStream.write(util.getAppPayloadAsFile(appId));
-         }
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .contentLength(file.length()) 
-                .body(resource);
-    }
+	
+	@PostMapping("/downloadapp")
+	public ResponseEntity downloadFile1(@RequestBody ObjectNode app) throws IOException {
+		String item = app.get("item").asText();
+		String appName = item.split("/")[3];
+		int appId = Integer.parseInt(item.split("/")[2]);
+		File file = new File(appName);
+		try (FileOutputStream fileOuputStream = new FileOutputStream(file)) {
+			fileOuputStream.write(util.getAppPayloadAsFile(appId));
+		}
+		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+				.contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(file.length()).body(resource);
+	}
+    
+	/*
+	 * @PostMapping("/downloadapp") public ResponseEntity<byte[]>
+	 * downloadFile1(@RequestBody ObjectNode app) throws IOException { String item =
+	 * app.get("item").asText(); String appName = item.split("/")[3]; int appId =
+	 * Integer.parseInt(item.split("/")[2]); File file = new File(appName); try
+	 * (FileOutputStream fileOuputStream = new FileOutputStream(file)){
+	 * fileOuputStream.write(util.getAppPayloadAsFile(appId)); } byte [] appData =
+	 * util.getAppPayloadAsFile(appId);
+	 * System.out.println("Length is ::::"+appData.length); InputStreamResource
+	 * resource = new InputStreamResource(new FileInputStream(file));
+	 * 
+	 * HttpHeaders header = new HttpHeaders();
+	 * header.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	 * header.setContentLength(appData.length); header.set("Content-Disposition",
+	 * "attachment; filename=" + appName); return new ResponseEntity<>(appData,
+	 * header, HttpStatus.OK); }
+	 */
 
 	/*
 	 * // Save
