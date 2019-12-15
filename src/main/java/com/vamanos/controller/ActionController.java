@@ -1,6 +1,7 @@
 package com.vamanos.controller;
 
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -106,13 +107,14 @@ public class ActionController {
 		String item = app.get("item").asText();
 		String appName = item.split("/")[3];
 		int appId = Integer.parseInt(item.split("/")[2]);
-		File file = new File(appName);
-		try (FileOutputStream fileOuputStream = new FileOutputStream(file)) {
-			fileOuputStream.write(util.getAppPayloadAsFile(appId));
-		}
-		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
-				.contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(file.length()).body(resource);
+		/*
+		 * File file = new File(appName); try (FileOutputStream fileOuputStream = new
+		 * FileOutputStream(file)) { fileOuputStream.write(); }
+		 */
+		byte[] filePayload = util.getAppPayloadAsFile(appId);
+		InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(filePayload));
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + appName)
+				.contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(filePayload.length).body(resource);
 	}
     
 	/*
