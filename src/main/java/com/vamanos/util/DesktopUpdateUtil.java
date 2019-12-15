@@ -107,13 +107,14 @@ public class DesktopUpdateUtil {
 	
 	public void uploadFile(String fileName, MultipartFile file) {
 		String fileType = "file";
-		/*
-		 * if(fileName.contains("txt")) { fileType = "file"; }else
-		 * if(fileName.contains("doc")) { fileType = "file"; }else
-		 * if(fileName.contains("xls")) { fileType = "file"; }else
-		 * if(fileName.contains("pdf")) { fileType = "pdf-file"; }else
-		 * if(fileName.contains("ppt")) { fileType = "ppt-file"; }
-		 */
+		
+		  if(fileName.contains("txt")) { fileType = "file"; }else
+		  if(fileName.contains("doc")) { fileType = "file-word";}else
+		  if(fileName.contains("xls")) { fileType = "file-excel"; }else
+		  if(fileName.contains("pdf")) { fileType = "file-pdf"; }else
+		  if(fileName.contains("ppt")) { fileType = "file-ppt"; }else
+	      if(fileName.contains("zip")) { fileType = "file-compressed"; }
+		 
 		try {
 			appService.createNewApp(fileName,fileType,file);
 		} catch (IOException e) {
