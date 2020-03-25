@@ -78,10 +78,17 @@ public class ActionController {
     	System.out.println(app);
     	String item = app.get("item").asText();
     	String option = app.get("option").asText();
-    	int appId = Integer.parseInt(item.split("/")[2]);
+
+    	int appId = 0;
+    	if(item !=null && !"".equals(item))
+    		appId = Integer.parseInt(item.split("/")[2]);
     	String payload = util.onContextMenuOptionClick(appId, option);
     	app.put("payload", payload);
-    	app.put("fileName", item.split("/")[3]);
+
+		if(item !=null && !"".equals(item))
+    		app.put("fileName", item.split("/")[3]);
+		else
+			app.put("fileName", "New Folder");
     	return app;
     }
     

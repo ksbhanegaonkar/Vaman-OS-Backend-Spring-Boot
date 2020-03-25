@@ -9,9 +9,9 @@ import javax.persistence.Id;
 @Entity(name = "APP_INSTANCE_DATA")
 public class AppInstanceData extends BaseIdEntity{
 
-	@Column(name="NAME")
+	@Column(name="APP_NAME")
 	String name;
-	@Column(name="TYPE")
+	@Column(name="APP_TYPE")
 	String type;
 	public String getName() {
 		return name;

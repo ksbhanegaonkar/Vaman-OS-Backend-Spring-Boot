@@ -101,6 +101,32 @@ public class AppService {
 		
 		
 	}
+
+	public void createFolder(String name) {
+		AppInstanceData data = new AppInstanceData();
+		AppInstancePayload payload = new AppInstancePayload();
+
+
+
+		data.setName(name);
+		data.setType("folder");
+
+
+		payload.setPayload("".getBytes());
+
+		appInstanceDataRepository.save(data);
+		payload.setAppId(data.getId());
+		appInstancePayloadRepository.save(payload);
+
+		if(!globalAppsRepository.existsByAppId(data.getId())){
+			GlobalApps app = new GlobalApps();
+			app.setAppId(data.getId());
+			globalAppsRepository.save(app);
+		}
+
+
+
+	}
 	
 	public void pasteApp(int appId) {
 		if(copiedAppInstanceData != null && copiedAppInstancePayload != null) {

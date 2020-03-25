@@ -95,3 +95,18 @@ update CONTEXT_MENU_OPTIONS set option_list = 'Open file,Open file in new window
 where type='file';
 update CONTEXT_MENU_OPTIONS set option_list = 'New Sprint 1,New User Story,Refresh,Copy,Paste,Upload' 
 where type='desktop-wallpaper';
+
+
+drop table PERMISSIONS;
+drop table ROLES;
+drop table PERMISSION_ROLE;
+drop table USERS;
+drop table ROLE_USER;
+drop table APP_INSTANCE_DATA;
+drop table APP_INSTANCE_PAYLOAD;
+drop table TEAM_APPS;
+drop table TEAMS;
+drop table USER_TEAM_RELATION;
+drop table PERSONAL_APPS;
+drop table GLOBAL_APPS;
+drop table CONTEXT_MENU_OPTIONS;

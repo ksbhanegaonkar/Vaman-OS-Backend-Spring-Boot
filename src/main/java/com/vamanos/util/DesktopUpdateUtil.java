@@ -102,6 +102,9 @@ public class DesktopUpdateUtil {
 		else if(action.contains("Download")) {
 			payload = getAppPayload(appId);
 		}
+		else if(action.contains("New Folder")) {
+			appService.createFolder("New Folder");
+		}
 		return payload;
 	}
 	
