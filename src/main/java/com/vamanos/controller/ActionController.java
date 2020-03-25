@@ -80,15 +80,19 @@ public class ActionController {
     	String option = app.get("option").asText();
 
     	int appId = 0;
-    	if(item !=null && !"".equals(item))
-    		appId = Integer.parseInt(item.split("/")[2]);
+		if (item == null || "".equals(item) || "desktop-wallpaper".equals(item) || "desktop-item-view".equals(item)) {
+			app.put("fileName", "New Folder");
+		} else {
+			appId = Integer.parseInt(item.split("/")[2]);
+			app.put("fileName", item.split("/")[3]);
+		}
+
+
+
     	String payload = util.onContextMenuOptionClick(appId, option);
     	app.put("payload", payload);
 
-		if(item !=null && !"".equals(item))
-    		app.put("fileName", item.split("/")[3]);
-		else
-			app.put("fileName", "New Folder");
+
     	return app;
     }
     

@@ -133,11 +133,11 @@ public class AppService {
 			appInstanceDataRepository.save(copiedAppInstanceData);
 			copiedAppInstancePayload.setAppId(copiedAppInstanceData.getId());
 			appInstancePayloadRepository.save(copiedAppInstancePayload);
-			if(globalAppsRepository.existsByAppId(appId)){
+			//if(globalAppsRepository.existsByAppId(copiedAppInstanceData.getId())){
 				GlobalApps app = new GlobalApps();
 				app.setAppId(copiedAppInstanceData.getId());
 				globalAppsRepository.save(app);
-			}
+			//}
 		}
 		copiedAppInstanceData = null;
 		copiedAppInstancePayload = null;

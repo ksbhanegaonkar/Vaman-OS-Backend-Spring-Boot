@@ -17,7 +17,7 @@ INSERT INTO PERMISSION_ROLE (PERMISSION_ID, ROLE_ID) VALUES
 INSERT INTO USERS (
     USERNAME,PASSWORD,
     EMAIL,ENABLED,ACCOUNT_EXPIRED,CREDENTIALS_EXPIRED,ACCOUNT_LOCKED) VALUES (
-    'admin','{bcrypt}$2a$10$EOs8VROb14e7ZnydvXECA.4LoIhPOoFHKvVF/iBZ/ker17Eocz4Vi',
+    'a','a',
     'william@gmail.com',true,false,false,false),
     ('user','{bcrypt}$2a$10$EOs8VROb14e7ZnydvXECA.4LoIhPOoFHKvVF/iBZ/ker17Eocz4Vi',
     'john@gmail.com',true,false,false,false);
@@ -90,6 +90,7 @@ insert into CONTEXT_MENU_OPTIONS values (2,'task-bar','Task bar option 1,Task ba
 insert into CONTEXT_MENU_OPTIONS values (3,'start-menu-button','My Folder,My Bookmarks,My Notes,Logout');
 insert into CONTEXT_MENU_OPTIONS values (4,'file','Open file,Open file in new window,Bookmark file,Copy file,Rename File,Delete file');
 insert into CONTEXT_MENU_OPTIONS values (5,'folder','Open folder,Open folder in new window,Bookmark folder,Copy folder,Rename folder,Delete folder');
+insert into CONTEXT_MENU_OPTIONS values (6,'desktop-item-view','New Sprint 1,New User Story,Refresh,Copy,Paste');
 
 update CONTEXT_MENU_OPTIONS set option_list = 'Open file,Open file in new window,Bookmark file,Download File,Copy file,Rename File,Delete file' 
 where type='file';
